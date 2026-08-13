@@ -145,6 +145,28 @@ WITH counts AS (
       SELECT
         DATE(submission_timestamp) AS submission_date,
         "firefox-android" AS application,
+        "beta" AS channel,
+        "addresses" AS engine_name,
+        metrics.labeled_string.addresses_sync_v2_failure_reason AS failure_reason_list,
+        metrics.labeled_counter.addresses_sync_v2_incoming AS incoming_counts,
+        metrics.labeled_counter.addresses_sync_v2_outgoing AS outgoing_counts,
+      FROM
+        mozdata.org_mozilla_fenix.addresses_sync
+      UNION ALL
+      SELECT
+        DATE(submission_timestamp) AS submission_date,
+        "firefox-android" AS application,
+        "release" AS channel,
+        "addresses" AS engine_name,
+        metrics.labeled_string.addresses_sync_v2_failure_reason AS failure_reason_list,
+        metrics.labeled_counter.addresses_sync_v2_incoming AS incoming_counts,
+        metrics.labeled_counter.addresses_sync_v2_outgoing AS outgoing_counts,
+      FROM
+        mozdata.org_mozilla_fenix.addresses_sync
+      UNION ALL
+      SELECT
+        DATE(submission_timestamp) AS submission_date,
+        "firefox-android" AS application,
         "nightly" AS channel,
         "creditcards" AS engine_name,
         metrics.labeled_string.creditcards_sync_v2_failure_reason AS failure_reason_list,
